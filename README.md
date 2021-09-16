@@ -5,50 +5,51 @@
 Hi! If you're reading this then it's because you're in the interview process with us at sherpa° and have been invited to
 complete the coding challenge. Congratulations!
 
-This coding challenge is designed to assess your ability while giving you the freedom to express yourself and show off
+This coding challenge is designed to assess your ability to write code while giving you the freedom to express yourself and show off
 what you consider to be best practices.
 
 ## Setup
 
-This repo contains the skeleton of an express app in typescript, to which you will add functionality. The code here was
-built for node version 14.
+This repository contains the skeleton of a NodeJS Express app in TypeScript and an SQLite database, to which you will add functionality. The code here was built for node version 14.
 
 The first step is to run `npm i` to install the required dependencies.
 
-A handful of scripts are provided, `npm run build` will build the application, `npm run start` will start the
-application, `npm run test` will run the tests.
+A handful of scripts are provided:
 
-The last script `generateData` should be executed in order to populate a json file at `data/data.json` this is required
-because it is necessary that the data have dates that are in the near future.
+`npm run build` will build the application
+
+`npm run start` will start the application 
+
+`npm run test` will run the tests.
+
+`generateData` should be executed in order to populate a json file at `data/data.json` into the SQLite database. This is required
+because it is necessary to set dates for events to be in the near future.
 
 ## The scenario
 
-You are a developer at a consulting company to work on a brand-new project, requirement is to build an application to
-service an events management company.
-
-Currently, everything is being managed by hand and this is proving unwieldy. The first step of the first iteration of
-the solution is to build a REST api to perform CRUD operations on events.
+You are a building a new RESTful API to manage events which are currently organized by hand and this is proving unwieldly.
+The first iteration of the solution is to add existing, upcoming events to a brand new database and build a REST API to get a list of events.
 
 ### Requirements
 
 #### The Data
 
-Determine how to model the data. The clients have provided a sample of their data in `data/data.json`. Your project
-manager has told you that they have events, events have a location, a name, and an organizer, who is a member of staff
+Determine how to model the data to be used in the API. You find a sample of what is currently available in `data/data.json`. 
+
+The existing system is capturing events which have a location, a name, and an organizer, who is a member of staff
 responsible for the event. You also know that there will be a need to associate a list of invitees with events, along
-with their rsvp status.
+with their reservation status to confirm their attendance.
 
-**Derive a data model for this relation of entities. Create the tables in the sqlite database, you may want to think
-about maintainability and documentation, an ERD might be useful, as might a migration process, you may want to think
-about using an ORM.**
+> Derive a data model for this relation of entities. Create the tables in the SQLite database, you may want to think
+about maintainability and documentation, an Entity Relationship Diagram (ERD) might be useful, as might a migration process, you may want to think about using an Object-Relational Mapping framework.
 
-The data given to you by the clients is a sample of the data as you expect to receive it. When the time comes they will
-provide a large json file to import into the db.
+The data given to you is a sample of the data as you expect to receive it. When the time comes they will
+provide a very large json file to import into the db.
 
-**Import the sample data into the database, write a script to do this and bear in mind it must operate at scale. You
-should think about data integrity, these clients are not tech-savvy, and we don't know how this json is being generated**
+> Import the sample data into the database, write a script to do this and bear in mind it must operate at scale. You
+should think about data integrity, chances are the large json file might not be complete for every event.
 
-#### The api
+#### The API
 
 `GET /events`
 
@@ -67,7 +68,7 @@ The required response is:
             name: string,
             date: Date,
             isOutside: boolean
-            attandees: [] // empty array is fine for first iteration
+            attendees: [] // empty array is fine for first iteration
             organizer: {
                 id: <unique identifier of organizer in our system>,
                 name: string
@@ -100,19 +101,53 @@ Retrieve details for an upcoming event
         temperatureInDegreesCelcius: number,
         chanceOfRain: number 0-100
     }
-    // OPTIONAL: This has been designated a 'nice to to have'
-    // if an event is happening in any country other than canada, fetch the visa and proof of vaccination requirements our organizers need
-    // the destination would be the country the event is happening in and the source is canada
-    // if an event is happening in canada, leave this null
-    visaRequirements: null | string
-    proofOfVaccineRequired: null | boolean
 }
 ```
 
 # Tips
 
-You have been provided with the barest of bare bones to get started. But don't feel compelled to use what is here, if you prefer hapi to express, or don't want to use any kind of http framework at all, or dislike typescript, you can yank those out and start completely afresh. You won't be judged negatively for it, but if you do make any big decisions it would certainly be a good idea to document why you chose what you chose.  
+You have been provided with the barest of bare bones to get started. But don't feel compelled to use what is here, if you prefer Hapi to Express, or don't want to use any kind of framework at all, or dislike SQLite, you can start with a fresh codebase and start with a greenfield. You won't be judged negatively for it, but if you do make any big decisions it would certainly be a good idea to document why you chose what you chose.
 
 Because the slate is blank, you will be making a lot of decisions about how the app should work, it's a good idea to document these decisions, as you will very likely be asked about them in the follow-up.
 
 The functional requirements here should probably take no longer than a couple of hours to implement. The standard you should be aiming for is something you would submit as a pull request for a production ready feature.
+
+## Weather API
+Feel free to use a weather API of your choosing to augment the data returned for each event. There are tons of APIs that you can freely use, here are some you can explore to get started with:
+- Open Weather Map https://openweathermap.org/
+- Yahoo https://developer.yahoo.com/weather/
+- Weather Stack https://weatherstack.com/
+
+# Assessment
+Overall quality over feature-completeness. The challenge is intentionally kept very open to provide you with enough freedom to make your own decisions and creatitivy. If you don't get to work on everything, outline what the next steps would look like and how you'd approach it. 
+
+We will assess your solution based on following criteria:
+
+- **Architecture**
+Design decisions, clean separation of concerns?
+
+- **Clarity**
+Comments, documentation, naming conventions
+
+- **Correctness**
+Does it work as intended
+
+- **Code Quality**
+Any code smells, red flags? OOO vs functional, SOLID, consistent code
+
+- **Security**
+Any vulnerabilities e.g. input validations, error handling
+
+- **Testing**
+Unit tests, do they run?
+
+- ~Scalability
+
+- ~Product readiness
+
+
+# Submission
+Once you're comfortable with sharing your code provide either a link to your repository or package it up into a `zip` file and send it to `alex@joinsherpa.com`.
+We love using GitHub, if you are using private repository you can also send an invite to [alx-andru](https://github.com/alx-andru).
+
+
