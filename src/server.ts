@@ -1,6 +1,6 @@
 import express from "express"
 import {Server} from "http";
-import {getDBConnection} from "./database";
+import {initializeDB} from "./database";
 
 const sleep = (ms: number): Promise<void> => new Promise((res) => setTimeout(res, ms))
 
@@ -8,7 +8,10 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
     try {
         const port = 4040
         const app = express()
-        getDBConnection()
+        const db = await initializeDB()
+        if( !db) {
+            reject("Database not connected")
+        }
         app.get('/', (req, res) => {
             res.send('Hello World!')
         })
