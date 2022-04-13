@@ -28,10 +28,10 @@ export class Invitation {
     })
     rsvpStatus!: RSVPStatus
 
-    @OneToMany(() => Event, (event) => event.invitations)
+    @ManyToOne(() => Event, (event) => event.invitations)
     public event!: Event
 
 
-    @OneToMany(() => Invitee, (invitee) => invitee.events)
+    @ManyToOne(() => Invitee, (invitee) => invitee.events)
     public invitee!: Invitee
 }
