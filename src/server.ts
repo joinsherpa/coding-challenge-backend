@@ -34,7 +34,8 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
                 where,
                 relations: {
                     location: true,
-                    organizer: true
+                    organizer: true,
+                    invitations: true
                 },
                 take: pageSize,
                 skip: (page - 1 ) * pageSize
