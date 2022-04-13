@@ -1,7 +1,7 @@
 import express from "express"
 import { Request, Response } from "express"
 import {Server} from "http";
-import { MoreThan } from "typeorm";
+import { Between, LessThan, MoreThan } from "typeorm";
 import {initializeDB} from "./database";
 import { Event } from "./entity/Event";
 
@@ -25,10 +25,13 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
             const pageSize = req.query.pageSize || 10
             const page = req.query.page || 1
             const from = req.query.from || +new Date()
+            const until = req.query.until
+            let where = { date: MoreThan(from) }
+            if(until){
+                where.date = Between(from, until)
+            }
             const events = await db?.getRepository(Event).find({
-                where: {
-                    date: MoreThan(from)
-                },
+                where,
                 relations: {
                     location: true,
                     organizer: true
