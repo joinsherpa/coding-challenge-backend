@@ -11,6 +11,10 @@ export class Event {
     @Column({ length: 70 })
     name!: string
 
+    // TODO: Add Date
+    @Column({ type: 'int' })
+    date!: number
+
     @Column()
     isOutside!: boolean
 
