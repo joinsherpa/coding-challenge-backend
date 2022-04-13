@@ -59,7 +59,7 @@ export const initializeDB = async (): Promise<DataSource | null> => {
             return { 
                 name: faker.word.noun(),
                 isOutside: faker.datatype.boolean(),
-                date: faker.date.future().getTime(),
+                date: faker.random.arrayElement([faker.date.past().getTime(), faker.date.future().getTime()]),
                 location: dbLocations[faker.datatype.number({ min: 0, max: dbLocations.length -1  })],
                 organizer: dbOranizers[faker.datatype.number({ min: 0, max: dbOranizers.length -1 })]
             }
