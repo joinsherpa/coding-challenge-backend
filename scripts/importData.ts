@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import * as fs from "fs";
 import { initializeDB } from "../src/database";
 import { Organizer } from "../src/entity/Organizer";
@@ -34,7 +36,9 @@ export const importData = async () => {
         process.exit(1)
     }
     // Import the data in json format and save in database
-    const stream = fs.createReadStream('./data/data.json')
+    const DATA_LOCATION = process.env.DATA_FILE_LOCATION
+
+    const stream = fs.createReadStream(DATA_LOCATION)
     let chunks: Buffer[] = []
     for await (const chunk of stream) {
         chunks.push(Buffer.from(chunk))
