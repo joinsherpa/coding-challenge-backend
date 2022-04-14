@@ -92,41 +92,16 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
                 take: pageSize,
                 skip: (page - 1 ) * pageSize
             })
-            if(events?.length === 0){
+            if(! events){
                 return res.json({ results: [] })
             }
-            // get the 7th day timestamp
-            const now = new Date()
-            const next7days = +now.setDate(now.getDate() + 7)
-
-            const eventsPromises = await Promise.allSettled(events.map(async ev => {
-                let event : EventResponse = ev
-                event.visaRequirements = null
-                event.proofOfVaccineRequired = null
-                // Request Weather Data fi the Event is between now and next 7 days 
-                // Or if the event is outside
-                const isEventInNext7Days = (+new Date()) >= event.date && event.date <= next7days
-                if(isEventInNext7Days || event.isOutside){
-                    event.weather = await getWeather(ev.location.name, ev.date)
-                }
-
-                // Request Sherpa if the location is not in Canada and if it's not remote
-                if(! ev.location.name.startsWith('CAN') && (ev.location.name.indexOf('REMOTE') === -1 )){
-                    const sherpaResp  = await getSherpa('CAN', ev.location.name.split('|')[0])
-                    if(sherpaResp){
-                        event.visaRequirements = sherpaResp.visaRequirements
-                        event.proofOfVaccineRequired = sherpaResp.proofOfVaccineRequired                        
-                    }
-                }
-                return event
-            }))
-            const eventsData = eventsPromises
-                .filter((e): e is PromiseFulfilledResult<EventResponse> => e.status === "fulfilled")
-                .map(e => e.value as EventResponse) as EventResponse[]
-
-            res.json({ results: eventsData })
+            res.json({ results: events })
         })
         app.get('/events/:eventId', async (req:Request, res:Response) => {
+            const eventId = parseInt(req.params.eventId)
+            if(! eventId){
+                return res.status(400).json({ error: 'Bad Request' });
+            }
             const event = await db?.getRepository(Event).findOne({
                 where : {
                     id: parseInt(req.params.eventId),
@@ -136,8 +111,32 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
                     organizer: true
                 }
             })
+            if(! event){
+                return res.status(404).json({ error: 'Not Found' });
+            }
+            // get the 7th day timestamp
+            const now = new Date()
+            const next7days = +now.setDate(now.getDate() + 7)
 
-            res.json(event)
+            const ev : EventResponse = event
+
+            // Request Weather Data fi the Event is between now and next 7 days 
+            // Or if the event is outside
+            const isEventInNext7Days = (+new Date()) >= event.date && event.date <= next7days
+            if(isEventInNext7Days || event.isOutside){
+                ev.weather = await getWeather(event.location.name, event.date)
+            }
+
+            // Request Sherpa if the location is not in Canada and if it's not remote
+            if(! event.location.name.startsWith('CAN') && (event.location.name.indexOf('REMOTE') === -1 )){
+                const sherpaResp  = await getSherpa('CAN', event.location.name.split('|')[0])
+                if(sherpaResp){
+                    ev.visaRequirements = sherpaResp.visaRequirements
+                    ev.proofOfVaccineRequired = sherpaResp.proofOfVaccineRequired                        
+                }
+            }
+            
+            res.json(ev)
         })
 
         const server = app.listen(port, () => {
