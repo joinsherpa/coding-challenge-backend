@@ -15,7 +15,7 @@ const AppDataSource = new DataSource({
     database: DB_LOCATION,
     entities: [Organizer, Location, Invitee, Event, Invitation],
     synchronize: true,
-    logging: true,
+    logging: false,
 })
 
 export default AppDataSource
