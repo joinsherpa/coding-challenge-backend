@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "target": "ES2018",
+      "module": "umd",
+      "lib": ["esnext"],
+      "strict": true,
+      "rootDirs": ["src", "scripts"],
+      "outDir": "dist",
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "moduleResolution": "node"
+    },
+    "include": ["scripts/**/*", "src/**/*"],
+    "exclude": ["scripts/**/*.spec.*"]
+  }
+  
