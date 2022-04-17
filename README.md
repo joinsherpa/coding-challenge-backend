@@ -1,9 +1,11 @@
-# Sherpa° Coding Challenge
+![sherpa coding challenge banner](docs/backend-engineer.png)
+# Join sherpa° - the coding challenge
+Find out more about sherpa° at our [careers page](https://joinsherpa.com/careers).
 
 ## Introduction
 
 Hi! If you're reading this then it's because you're in the interview process with us at sherpa° and have been invited to
-complete the coding challenge. Congratulations!
+complete the coding challenge as a **Backend Engineer**. Congratulations! 🎉
 
 This coding challenge is designed to assess your ability to write code while giving you the freedom to express yourself and show off
 what you consider to be best practices.
@@ -22,7 +24,7 @@ A handful of scripts are provided:
 
 `npm run test` will run the tests.
 
-`generateData` should be executed in order to populate a json file at `data/data.json` into the SQLite database. This is required
+`npm run generateData` should be executed in order to populate a json file at `data/data.json` into the SQLite database. This is required
 because it is necessary to set dates for events to be in the near future.
 
 ## The scenario
@@ -106,16 +108,16 @@ Retrieve details for an upcoming event
 
 # Tips
 
-You have been provided with the barest of bare bones to get started. But don't feel compelled to use what is here, if you prefer Hapi to Express, or don't want to use any kind of framework at all, or dislike SQLite, you can start with a fresh codebase and start with a greenfield. You won't be judged negatively for it, but if you do make any big decisions it would certainly be a good idea to document why you chose what you chose.
+You have been provided with the barest of bare bones to get started. But don't feel compelled to use what is here, if you prefer Hapi to Express, NestJS, Fastify, or don't want to use any kind of framework at all, or dislike SQLite, you can start with a fresh codebase and start with a greenfield. You won't be judged negatively for it, but if you do make any big decisions it would certainly be a good idea to document why you chose what you chose.
 
 Because the slate is blank, you will be making a lot of decisions about how the app should work, it's a good idea to document these decisions, as you will very likely be asked about them in the follow-up.
 
-The functional requirements here should probably take no longer than a couple of hours to implement. The standard you should be aiming for is something you would submit as a pull request for a production ready feature.
+The functional requirements here should probably take no longer than a couple of hours to implement. The standard you should be aiming for is something you would submit as a pull request for a production ready feature. Keep in mind, quality over quantity. If you don't get to a complete solution, that's fine as long as you can highlight your approach and showcase quality code.
 
 ## Weather API
 Feel free to use a weather API of your choosing to augment the data returned for each event. There are tons of APIs that you can freely use, here are some you can explore to get started with:
+- Weather API https://www.weatherapi.com/
 - Open Weather Map https://openweathermap.org/
-- Yahoo https://developer.yahoo.com/weather/
 - Weather Stack https://weatherstack.com/
 
 # Assessment
@@ -139,15 +141,27 @@ Any code smells, red flags? OOO vs functional, SOLID, consistent code
 Any vulnerabilities e.g. input validations, error handling
 
 - **Testing**
-Unit tests, do they run?
+Unit tests, do they exist, do they run?
 
 - ~Scalability
+How will it perform with 1 req/s, 10 req/s, 100 req/s? 
 
 - ~Product readiness
+Can it be used in production? What might be missing?
 
 
 # Submission
 Once you're comfortable with sharing your code provide either a link to your repository or package it up into a `zip` file and send it to `alex@joinsherpa.com`.
-We love using GitHub, if you are using private repository you can also send an invite to [alx-andru](https://github.com/alx-andru).
+We love using GitHub, if you are using private repository you can also send an invite to [alx-andru](https://github.com/alx-andru) or fork this repo and open a PR with your changes!
+
+# FAQ
+I have not been invited for a coding challenge, can I still submit?
+> Absolutely! We are looking for folks who are just as passionate about building products for a global audience as we are. Submit your solution and we'll be in touch! Chances are you'll be able to go through our interview process and join sherpa°! 
+
+I've spent too much time and can't complete the challenge, will I loose the opportunity to get a job?
+> As a reminder, quality over quantity. If you don't get to a complete solution, that's fine as long as you can highlight your approach and showcase quality code. Pick one endpoint and see if you can get it to work.
+
+Can I use a different tech stack?
+> You have the freedom to use different frameworks and libraries but `Typescript` remains a hard requirement as it is our primary programming language and you'll be working with it every day.
 
 
