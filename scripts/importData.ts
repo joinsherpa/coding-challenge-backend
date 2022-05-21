@@ -7,7 +7,15 @@ interface Event {
     isOutside: boolean,
     location: string,
     date: number,
-    organizer: Organizer
+    organizer: Organizer,
+    attendees: Attendees[]
+}
+
+interface Attendees {
+    status: string,
+    email: string,
+    attName: string,
+    Event_id: number
 }
 
 export const importData = () => {
