@@ -2,6 +2,8 @@
 # Join sherpa° - the coding challenge
 Find out more about sherpa° at our [careers page](https://joinsherpa.com/careers).
 
+Looking for a [Frontend Engineering](https://github.com/joinsherpa/coding-challenge-frontend) role instead?
+
 ## Introduction
 
 Hi! If you're reading this then it's because you're in the interview process with us at sherpa° and have been invited to
