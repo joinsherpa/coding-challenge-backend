@@ -1,12 +1,14 @@
-import express, { Response, Request } from "express"
+import express, { Response, Request } from "express";
+import cors from "cors";
 import {Server} from "http";
 import {Event, Organizer, Attendee, connection, getAllEvents, getAllAttendees, addEvent, addAttendee, getEventDetails} from "./mongo";
 
-
 export const start = async (): Promise<Server> => new Promise(async (resolve, reject) => {
+
     try {
         const port = 4040;
         const app = express();
+        app.use(cors());
         app.use(express.json());
 
         app.get('/events', (req: Request, res: Response) => {
@@ -74,7 +76,7 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
         connection();
 
         const server = app.listen(port, () => {
-            console.log(`Example app listening at http://localhost:${port}`)
+            console.log(`Listening at http://localhost:${port}`)
             resolve(server)
         })
     } catch (err) {

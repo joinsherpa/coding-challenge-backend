@@ -5,7 +5,7 @@ import * as webpack from 'webpack';
 import * as webpackDevServer from 'webpack-dev-server';
 
 const config: Configuration = {
-  entry: "./src/index.tsx",
+  entry: "./src/reactIndex.tsx",
   module: {
     rules: [
       {
