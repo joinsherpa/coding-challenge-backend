@@ -16,11 +16,3 @@ export const getDBConnection = (): Database => {
     return db
 }
 
-// db.run("CREATE TABLE Event(\
-//     id INTEGER NOT NULL,\
-//     eventName TEXT NOT NULL,\
-//     eventDate TEXT NOT NULL,\
-//     eventLocation TEXT NOT NULL,\
-//     isOutside INTEGER,\
-//     Organizers_orgId INTEGER,\
-//     PRIMARY KEY(id))" );
