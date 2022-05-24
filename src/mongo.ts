@@ -61,8 +61,6 @@ export const addEvent = (newEvent: Event) => {
 }
 
 export const getAllEvents = (from?: number, to?: number) =>  {
-  console.log(from! <= 1653410177760)
-  console.log('dbfrom: ',from, typeof from, 'dbto: ',to, typeof to)
   //if both args are valid
   if (from && to) {
     console.log('in1: ', from, to)
@@ -82,6 +80,10 @@ export const getAllEvents = (from?: number, to?: number) =>  {
     return eventsModel.find({date: {$gte: currTime}})
   }
 }
+
+// export const getEventCount = (from?: number, to?: number) {
+
+// }
 
 export const getEventDetails = (eventId: string) => {
   return eventsModel.find({"_id": eventId})
