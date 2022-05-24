@@ -24,11 +24,11 @@ const App: React.FC = () => {
 
   function getEvents(date1?: Date, date2?: Date): void {
     let url = new URL('http://localhost:4040/events');
-    const fromDate = date1 ? Math.floor(date1.getTime()/1000) : null;
-    const toDate = date2 ? Math.floor(date2.getTime()/1000): null;
+    const fromDate = date1 ? date1.getTime() : '';
+    const toDate = date2 ? date2.getTime(): '';
     const params = {params: {from: fromDate, to: toDate}};
 
-    axios.get('http://localhost:4040/events', params)
+    axios.get('http://localhost:4040/events', {params: {from: fromDate, to: toDate}})
       .then((eventList)=> {
         if (date1) {
           setBeginDateRange(date1)

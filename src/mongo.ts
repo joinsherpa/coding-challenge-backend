@@ -61,19 +61,23 @@ export const addEvent = (newEvent: Event) => {
 }
 
 export const getAllEvents = (from?: number, to?: number) =>  {
+  console.log(from! <= 1653410177760)
+  console.log('dbfrom: ',from, typeof from, 'dbto: ',to, typeof to)
   //if both args are valid
   if (from && to) {
-    console.log(from, to)
+    console.log('in1: ', from, to)
     return eventsModel.find({date: {$gte: from, $lte : to}})
   }
   //if 'from' is valid, but 'to' is not
   else if (from && !to) {
-    console.log('2')
+    console.log('in2: ', from, to)
     return eventsModel.find({date: {$gte: from}})
   }
   //if both are invalid
   else {
-    let currTime = Number(new Date());
+    console.log('in3: ', from, to)
+    let currTime = Math.floor(new Date().getTime() / 1000);
+    // Math.floor(date1.getTime()/1000
     // console.log('currTime: ', typeof currTime, currTime)
     return eventsModel.find({date: {$gte: currTime}})
   }

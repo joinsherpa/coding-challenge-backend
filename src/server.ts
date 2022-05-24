@@ -12,8 +12,9 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
         app.use(express.json());
 
         app.get('/events', (req: Request, res: Response) => {
-            let from = parseInt(req?.params?.from) !== NaN ? parseInt(req?.params?.from) : 0;
-            let to = parseInt(req?.params?.to) !== NaN ? parseInt(req?.params?.to): 0;
+            let from = req.query.from !== '' ? +req.query.from! : 0;
+            let to = req.query.to  !== '' ? +req.query.to! : 0;
+            console.log('server: ', to, from)
             getAllEvents(from, to)
                 .then((results) => {
                     res.status(200).send(results)
