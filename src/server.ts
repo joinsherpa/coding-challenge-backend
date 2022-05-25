@@ -74,6 +74,7 @@ export const start = async (): Promise<Server> =>
                     //upon successful retrieval of latitude and longitude
                     const coordinates =
                       response.data.results[0].geometry.location;
+                      console.log(targetEvent.location, coordinates)
                     //use latitude and longititude to get weather data from openweather api
                     getWeather(coordinates.lat, coordinates.lng)
                       .then((response) => {
@@ -84,7 +85,7 @@ export const start = async (): Promise<Server> =>
                             let eventTime = new Date(targetEvent.date).toDateString();
                             if (oneDayTime === eventTime) {
                                 updatedTarget =  {
-                                    id : targetEvent._id,
+                                    _id : targetEvent._id,
                                     name: targetEvent.name,
                                     isOutside: targetEvent.isOutside,
                                     location: targetEvent.location,
@@ -110,7 +111,7 @@ export const start = async (): Promise<Server> =>
                 });
             } else {
                 updatedTarget =  {
-                    id : targetEvent._id,
+                    _id : targetEvent._id,
                     name: targetEvent.name,
                     isOutside: targetEvent.isOutside,
                     location: targetEvent.location,

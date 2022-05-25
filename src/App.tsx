@@ -20,7 +20,7 @@ type EventObj = {
 const App: React.FC = () => {
   const [beginDateRange, setBeginDateRange] = useState<Date | null>(null);
   const [endDateRange, setEndDateRange] = useState<Date | null>(null);
-  const [eventList, setEventList] = useState<EventObj[] | null>(null);
+  const [eventList, setEventList] = useState<EventObj[] | []>([]);
 
   function getEvents(date1?: Date, date2?: Date): void {
     let url = new URL('http://localhost:4040/events');
@@ -43,20 +43,21 @@ const App: React.FC = () => {
       })
   }
 
-  function addEventDetails(id: String, detailedEvent: Object) {
-    axios.get(`http://localhost:4040/?eventId=${id}`)
-      .then((results) => {
-        console.log(results)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    // eventList?.forEach((oneEvent, index) => {
-    //   if (oneEvent._id === id) {
-    //     const newList = [...eventList].splice(index, )
-    //     setEventList((prev) => [])
-    //   }
-    // })
+  function addEventDetails(detailedEvent: EventObj) {
+    console.log('in app: ', detailedEvent)
+    if (eventList) {
+      for (var i=0; i < eventList?.length; i++) {
+        let currId = eventList[i]._id;
+        let newId = detailedEvent._id;
+        if (currId === newId) {
+          setEventList((prevList) => {
+            let copy = [...(prevList || [])];
+            copy[i] = detailedEvent;
+            return copy
+          })
+        }
+      }
+    }
   }
 
   return (

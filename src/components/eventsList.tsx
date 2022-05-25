@@ -18,14 +18,14 @@ type EventsListProps = {
   beginDate: Date | null;
   endDate: Date  | null;
   eventList: EventObj[] | null;
-  addEventDetails: (id: String, detailedEvent: Object) => void;
+  addEventDetails: (detailedEvent: EventObj) => void;
 };
 
 const EventsList: React.FC<EventsListProps> = ({beginDate, endDate, eventList, addEventDetails}) => {
 
-  useEffect(() => {
-    console.log('in eventlist: ', beginDate, endDate, eventList)
-  }, [eventList])
+  // useEffect(() => {
+  //   console.log('in eventlist: ', beginDate, endDate, eventList)
+  // }, [eventList])
 
   const retrieveDetails = function(id: String) {
     // const buttonEl = document.querySelector(`.class${id}`)!;
@@ -35,7 +35,8 @@ const EventsList: React.FC<EventsListProps> = ({beginDate, endDate, eventList, a
     //should hit specific event endpoint
     axios.get(`http://localhost:4040/events/${id}`)
     .then((results)=> {
-      console.log(results)
+      // console.log(results)
+      addEventDetails(results.data)
       // const classTemp = `.${id}`;
       // console.log(results.data[0])
       // buttonContainerEl.innerText = 'works'
@@ -52,7 +53,6 @@ const EventsList: React.FC<EventsListProps> = ({beginDate, endDate, eventList, a
     <OneEvent
       eventList={eventList}
       retrieveDetails={retrieveDetails}
-      addEventDetails={addEventDetails}
     />
     </div>
   );

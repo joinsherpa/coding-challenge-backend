@@ -21,7 +21,7 @@ export interface Event {
 }
 
 export interface DetailedEvent {
-  id? : string,
+  _id? : string,
   name: string,
   isOutside: boolean,
   location: string,
@@ -32,8 +32,8 @@ export interface DetailedEvent {
 }
 
 export interface Weather {
-  temperatureInDegreesCelcius: Number;
-  chanceOfRain: Number | String;
+  temperatureInDegreesCelcius: number;
+  chanceOfRain: number | string;
 }
 
 export interface Organizer {
