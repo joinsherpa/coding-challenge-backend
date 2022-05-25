@@ -43,6 +43,22 @@ const App: React.FC = () => {
       })
   }
 
+  function addEventDetails(id: String, detailedEvent: Object) {
+    axios.get(`http://localhost:4040/?eventId=${id}`)
+      .then((results) => {
+        console.log(results)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    // eventList?.forEach((oneEvent, index) => {
+    //   if (oneEvent._id === id) {
+    //     const newList = [...eventList].splice(index, )
+    //     setEventList((prev) => [])
+    //   }
+    // })
+  }
+
   return (
     <>
       <h1>Event Headquarters</h1>
@@ -51,6 +67,7 @@ const App: React.FC = () => {
         beginDate={beginDateRange}
         endDate={endDateRange}
         eventList={eventList}
+        addEventDetails={addEventDetails}
       />
     </>
   );

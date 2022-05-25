@@ -11,12 +11,29 @@ export const connection = () => {
 }
 
 export interface Event {
+      _id?: string,
       name: string,
       isOutside: boolean,
       location: string,
       date: number,
       organizer: Organizer,
-      attendees: Types.DocumentArray<Attendee>
+      attendees: Attendee[];
+}
+
+export interface DetailedEvent {
+  id? : string,
+  name: string,
+  isOutside: boolean,
+  location: string,
+  date: number,
+  organizer: Organizer,
+  attendees: Attendee[];
+  weather?: Weather | null;
+}
+
+export interface Weather {
+  temperatureInDegreesCelcius: Number;
+  chanceOfRain: Number | String;
 }
 
 export interface Organizer {
@@ -63,17 +80,14 @@ export const addEvent = (newEvent: Event) => {
 export const getAllEvents = (from?: number, to?: number) =>  {
   //if both args are valid
   if (from && to) {
-    console.log('in1: ', from, to)
     return eventsModel.find({date: {$gte: from, $lte : to}})
   }
   //if 'from' is valid, but 'to' is not
   else if (from && !to) {
-    console.log('in2: ', from, to)
     return eventsModel.find({date: {$gte: from}})
   }
   //if both are invalid
   else {
-    console.log('in3: ', from, to)
     let currTime = Math.floor(new Date().getTime() / 1000);
     // Math.floor(date1.getTime()/1000
     // console.log('currTime: ', typeof currTime, currTime)

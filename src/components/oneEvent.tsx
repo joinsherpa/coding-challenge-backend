@@ -13,12 +13,11 @@ type EventObj = {
 
 type oneEventProps = {
   eventList: EventObj[] | null;
-  retrieveWeather: (location: String, id: String) => void;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  retrieveDetails: (id: String) => void;
+  addEventDetails: (id: String, detailedEvent: Object) => void;
 };
 
-const OneEvent: React.FC<oneEventProps> = ({eventList, retrieveWeather, onClick}) => {
-
+const OneEvent: React.FC<oneEventProps> = ({eventList, retrieveDetails, addEventDetails}) => {
   const eventElements = eventList?.map((oneEvent, index) => {
 
     return (
@@ -28,13 +27,13 @@ const OneEvent: React.FC<oneEventProps> = ({eventList, retrieveWeather, onClick}
           <h4>{oneEvent.location}</h4>
           <h4>{new Date(oneEvent.date).toDateString()}</h4>
           <h4>{oneEvent.isOutside ? 'Outdoor Event' : 'Indoor Event'}</h4>
-          <h4>{oneEvent?.organizer?.name}</h4>
+          <h4>{oneEvent.organizer ? `Organizer: ${oneEvent?.organizer?.name}` : null}</h4>
           <h4>{`${oneEvent.attendees.length} people are attending`}</h4>
         </div>
         {oneEvent.isOutside ?
         <div id={`id${index}`}>
-          <button className={`weather-button class${index}`} onClick={()=>retrieveWeather(oneEvent.location, index.toString())}>
-            Get Event Weather
+          <button className={`weather-button class${index}`} onClick={()=>retrieveDetails(oneEvent._id)}>
+            Get Event Details
           </button>
         </div>
         : null}

@@ -18,26 +18,27 @@ type EventsListProps = {
   beginDate: Date | null;
   endDate: Date  | null;
   eventList: EventObj[] | null;
+  addEventDetails: (id: String, detailedEvent: Object) => void;
 };
 
-const EventsList: React.FC<EventsListProps> = ({beginDate, endDate, eventList}) => {
+const EventsList: React.FC<EventsListProps> = ({beginDate, endDate, eventList, addEventDetails}) => {
 
   useEffect(() => {
     console.log('in eventlist: ', beginDate, endDate, eventList)
   }, [eventList])
 
-  const retrieveWeather = function(location: string, id: string) {
-    const buttonEl = document.querySelector(`.class${id}`)!;
-    buttonEl.remove()
-    const buttonContainerEl = document.getElementById(`id${id}`)!;
-    buttonContainerEl.innerText = "Retrieving Event Weather";
-    axios.get('http://localhost:4040/weather', {params: {weatherLoc: location}})
+  const retrieveDetails = function(id: String) {
+    // const buttonEl = document.querySelector(`.class${id}`)!;
+    // buttonEl.remove()
+    // const buttonContainerEl = document.getElementById(`id${id}`)!;
+    // buttonContainerEl.innerText = "Retrieving Event Weather";
+    //should hit specific event endpoint
+    axios.get(`http://localhost:4040/events/${id}`)
     .then((results)=> {
-      const classTemp = `.${id}`;
-
-      //correctly retrieving weather data per location, need to cross check it with event date and then render
-      console.log(results.data[0])
-      buttonContainerEl.innerText = 'works'
+      console.log(results)
+      // const classTemp = `.${id}`;
+      // console.log(results.data[0])
+      // buttonContainerEl.innerText = 'works'
     })
     .catch((err)=> {
       console.log(err)
@@ -48,7 +49,11 @@ const EventsList: React.FC<EventsListProps> = ({beginDate, endDate, eventList}) 
     <div className='all-events-container'>
     {beginDate ? <h1>{`Events from ${beginDate.toDateString()}`}</h1> : null}
     {endDate ? <h1>{` to ${endDate.toDateString()}`}</h1> : null}
-    <OneEvent eventList={eventList} retrieveWeather={retrieveWeather}/>
+    <OneEvent
+      eventList={eventList}
+      retrieveDetails={retrieveDetails}
+      addEventDetails={addEventDetails}
+    />
     </div>
   );
 };
