@@ -2,19 +2,31 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
 
 body {
   background-color: lightgray;
 }
 
+h1 {
+  padding: 20px;
+  font-size: 45px;
+}
+h2 {
+  padding: 10px 0;
+  font-size: 36px;
+}
+
 h3 {
   font-size: 28px;
+  font-weight: 400;
 }
 
 h4 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 300;
+  padding: 2px;
 }
 
 h4 span {
@@ -24,20 +36,85 @@ h4 span {
 
 button {
   margin: 30px 20px;
-  width: 150px;
-  height: 30px;
-  font-size: 18px;
+  width: 200px;
+  height: 50px;
+  font-size: 24px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: rgb(99, 99, 99);
+  color: white;
+}
+
+.calendar {
+  margin-left: 20px;
+}
+
+.top-container {
+  display: flex;
+  height: 400px;
+}
+
+.top-right-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50px;
+}
+
+.directions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.search-range-container {
+  height: 40px;
+}
+
+.range {
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.range-tag {
+font-size: 24px;
+font-style: normal;
 }
 
 .weather-button {
   height: 50px;
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.all-events-container {
+  padding-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .events-container {
   display: flex;
   flex-direction: column;
-  min-width: 400px;
-  max-width: 600px;
+  min-width: 600px;
+  max-width: 800px;
+}
+
+.event-date-range {
+  text-align: center;
+  padding-bottom: 30px;
 }
 
 .one-event {
@@ -45,11 +122,17 @@ button {
   justify-content: space-between;
   background-color: rgb(100, 100, 100);
   color: white;
-  padding: 10px;
-  margin:0 20px 20px 20px;
+  padding: 20px;
+  margin-bottom:20px;
 }
 
+.one-event-left {
+  width: 60%;
+}
 
+.weather {
+  width: 40%;
+}
 
 /* Calendar Styling */
 .react-calendar {
@@ -101,7 +184,7 @@ button {
 }
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
-  background-color: #e6e6e6;
+  background-color: rgb(99, 99, 99);
 }
 .react-calendar__month-view__weekdays {
   text-align: center;
@@ -142,14 +225,14 @@ button {
 }
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background-color: #e6e6e6;
+  background-color: rgb(99, 99, 99);
 }
 .react-calendar__tile--now {
   background: #ffff76;
 }
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-  background: #ffffa9;
+  background: rgb(99, 99, 99);
 }
 .react-calendar__tile--hasActive {
   background: #76baff;
@@ -167,5 +250,5 @@ button {
   background: #1087ff;
 }
 .react-calendar--selectRange .react-calendar__tile--hover {
-  background-color: #e6e6e6;
+  background-color: rgb(99, 99, 99);
 }

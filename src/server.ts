@@ -28,7 +28,7 @@ export const start = async (): Promise<Server> =>
       app.get("/events", (req: Request, res: Response) => {
         let from = req.query.from !== "" ? +req.query.from! : 0;
         let to = req.query.to !== "" ? +req.query.to! : 0;
-        let lastId = req.query.lastId !== '' ? req.query.lastId : '';
+        let lastId = req.query.lastId !== '' ? req.query.lastId as string: '';
 
         getAllEvents(from, to, lastId)
           .then((results) => {
@@ -55,7 +55,7 @@ export const start = async (): Promise<Server> =>
           });
 
         //Step 2: get specific event from allevents collection
-        await getEventDetails(eventId, lastId)
+        await getEventDetails(eventId)
           .then(async (results: Event[]) => {
             results[0].attendees = attendeeList;
             targetEvent = results[0];

@@ -80,32 +80,36 @@ export const addEvent = (newEvent: Event) => {
 
 export const getAllEvents = (from?: number, to?: number, lastId?: string) =>  {
   //pagination is achieved by utilizing the objectid. These ids are indexed and incremented making them perfect for scalable pagination.
-
+  // const idString = "ObjectId(" + lastId + "")";
+  // console.log(idString)
   //if both 'from' and 'to' args are valid
   if (from && to) {
+    console.log('first')
     return (lastId
-    ? eventsModel.find({date: {$gte: from, $lte: to}, _id: {$gt: `ObjectId("${lastId}")`}}).limit(5)
+    ? eventsModel.find({date: {$gte: from, $lte: to}, _id: {$gt: lastId}}).limit(5)
     : eventsModel.find({date: {$gte: from, $lte: to}}).limit(5))
   }
   //if 'from' is valid, but 'to' is not
   else if (from && !to) {
+    console.log('second')
     return (lastId
-      ? eventsModel.find({date: {$gte: from}, _id: {$gt: `ObjectId("${lastId}")`}}).limit(5)
+      ? eventsModel.find({date: {$gte: from}, _id: {$gt: lastId}}).limit(5)
       : eventsModel.find({date: {$gte: from}}).limit(5)
       )
 
   }
   //if both 'from' and 'to' are invalid
   else {
+    console.log('third')
     let currTime = Math.floor(new Date().getTime() / 1000);
     return (lastId
-      ? eventsModel.find({date: {$gte: currTime}, _id: {$gt: `ObjectId("${lastId}")`}}).limit(5)
+      ? eventsModel.find({date: {$gte: currTime}, _id: {$gt: lastId}}).limit(5)
       : eventsModel.find({date: {$gte: from}}).limit(5)
       )
   }
 }
 
-export const getEventDetails = (eventId: string, lastId: string) => {
+export const getEventDetails = (eventId: string) => {
   return eventsModel.find({"_id": eventId})
 }
 

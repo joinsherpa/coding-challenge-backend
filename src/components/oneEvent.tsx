@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Weather } from "../mongo";
 
 type EventObj = {
@@ -19,10 +19,10 @@ type oneEventProps = {
 };
 
 const OneEvent: React.FC<oneEventProps> = ({ eventList, retrieveDetails }) => {
+
   const eventElements = eventList?.map((oneEvent, index) => {
     return (
       <div className="one-event">
-        <div className="one-event-left"></div>
         {"weather" in oneEvent ? (
           <div className="one-event-left">
             <h3>{oneEvent.name}</h3>
