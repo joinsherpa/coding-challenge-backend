@@ -52,6 +52,7 @@
     "express": "^4.17.1",
     "mongodb": "^4.6.0",
     "mongoose": "^6.3.4",
+    "mongoose-paginate-v2": "^1.6.3",
     "nodemon": "^2.0.16",
     "react": "^18.1.0",
     "react-calendar": "^3.7.0",

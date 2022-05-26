@@ -22,13 +22,14 @@ const App: React.FC = () => {
   const [endDateRange, setEndDateRange] = useState<Date | null>(null);
   const [eventList, setEventList] = useState<EventObj[] | []>([]);
 
-  function getEvents(date1?: Date, date2?: Date): void {
-    let url = new URL('http://localhost:4040/events');
-    const fromDate = date1 ? date1.getTime() : '';
+  function getEvents(date1?: Date, date2?: Date, lastId?: string): void {
+    const fromDate = date1?.getTime();
     const toDate = date2 ? date2.getTime(): '';
+    lastId = lastId ? lastId : '';
     const params = {params: {from: fromDate, to: toDate}};
+    console.log('from: ', fromDate, 'to: ', toDate)
 
-    axios.get('http://localhost:4040/events', {params: {from: fromDate, to: toDate}})
+    axios.get('http://localhost:4040/events', {params: {from: fromDate, to: toDate, lastId: lastId}})
       .then((eventList)=> {
         if (date1) {
           setBeginDateRange(date1)
@@ -44,7 +45,6 @@ const App: React.FC = () => {
   }
 
   function addEventDetails(detailedEvent: EventObj) {
-    console.log('in app: ', detailedEvent)
     if (eventList) {
       for (var i=0; i < eventList?.length; i++) {
         let currId = eventList[i]._id;

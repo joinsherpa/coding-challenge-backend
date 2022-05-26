@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
-import { SpinnerCircular } from 'spinners-react';
 import OneEvent from './oneEvent';
 
 type EventObj = {
@@ -23,23 +22,10 @@ type EventsListProps = {
 
 const EventsList: React.FC<EventsListProps> = ({beginDate, endDate, eventList, addEventDetails}) => {
 
-  // useEffect(() => {
-  //   console.log('in eventlist: ', beginDate, endDate, eventList)
-  // }, [eventList])
-
   const retrieveDetails = function(id: String) {
-    // const buttonEl = document.querySelector(`.class${id}`)!;
-    // buttonEl.remove()
-    // const buttonContainerEl = document.getElementById(`id${id}`)!;
-    // buttonContainerEl.innerText = "Retrieving Event Weather";
-    //should hit specific event endpoint
     axios.get(`http://localhost:4040/events/${id}`)
     .then((results)=> {
-      // console.log(results)
       addEventDetails(results.data)
-      // const classTemp = `.${id}`;
-      // console.log(results.data[0])
-      // buttonContainerEl.innerText = 'works'
     })
     .catch((err)=> {
       console.log(err)

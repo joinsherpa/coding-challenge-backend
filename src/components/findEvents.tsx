@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import { ProgressPlugin } from 'webpack';
 
@@ -6,11 +6,9 @@ type FindEventProps = {
   getEvents: (date1?: Date, date2?: Date) => void
 };
 
-const FindEvents: React.FC<FindEventProps> = (props) => {
+const FindEvents: React.FC<FindEventProps> = ({getEvents}) => {
   const [fromDate, changeFromDate] = useState<Date>();
   const [toDate, changeToDate] = useState<Date>();
-  const fromRef = useRef<HTMLSpanElement>(null);
-  const toRef = useRef<HTMLSpanElement>(null);
 
   function changeDate(dateObj: Date) {
     if (!fromDate) {
@@ -24,7 +22,8 @@ const FindEvents: React.FC<FindEventProps> = (props) => {
   }
 
   function submitDates() {
-    props.getEvents(fromDate, toDate)
+    let startDate = fromDate ? fromDate : new Date();
+    getEvents(startDate, toDate)
     changeFromDate(undefined);
     changeToDate(undefined);
   }
@@ -40,12 +39,12 @@ const FindEvents: React.FC<FindEventProps> = (props) => {
         <h3>Step 1: Choose start date (optional)</h3>
         <h4>
           Selected From Date:
-          <span ref={fromRef}>{fromDate?.toDateString()}</span>
+          <span>{fromDate?.toDateString()}</span>
         </h4>
         <h3>Step 2: Choose start date (optional)</h3>
         <h4>
           Selected To Date:
-          <span ref={toRef}>{toDate?.toDateString()}</span>
+          <span>{toDate?.toDateString()}</span>
           </h4>
         <h2>Or</h2>
         <h3>Just click the button below to get all current/future events</h3>

@@ -28,6 +28,7 @@ const OneEvent: React.FC<oneEventProps> = ({ eventList, retrieveDetails }) => {
             <h3>{oneEvent.name}</h3>
             <h4>{oneEvent.location}</h4>
             <h4>{new Date(oneEvent.date).toDateString()}</h4>
+            <h4>{oneEvent.isOutside ? "Outdoor Event" : "Indoor Event"}</h4>
             <h4>
               {oneEvent.organizer
                 ? `Organizer: ${oneEvent?.organizer?.name}`
@@ -69,13 +70,9 @@ const OneEvent: React.FC<oneEventProps> = ({ eventList, retrieveDetails }) => {
       </div>
     );
   });
-
-  {
-    /* <h4>{oneEvent.isOutside ? 'Outdoor Event' : 'Indoor Event'}</h4>
-          <h4>{oneEvent.organizer ? `Organizer: ${oneEvent?.organizer?.name}` : null}</h4>
-          <h4>{`${oneEvent.attendees.length} people are attending`}</h4> */
-  }
-  return <div className="events-container">{eventElements}</div>;
+  return <div className="events-container">
+    {eventElements}
+    </div>;
 };
 
 export default OneEvent;
