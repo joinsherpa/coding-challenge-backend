@@ -10,6 +10,7 @@ const FindEvents: React.FC<FindEventProps> = ({ getEvents }) => {
   const [fromDate, changeFromDate] = useState<Date>();
   const [toDate, changeToDate] = useState<Date>();
 
+  //captures the date clicked on the calendar element
   function changeDate(dateObj: Date) {
     if (!fromDate) {
       changeFromDate(dateObj);
@@ -21,6 +22,7 @@ const FindEvents: React.FC<FindEventProps> = ({ getEvents }) => {
     }
   }
 
+  //when the "find Events" button is clicked it sends the "to" and "from" dates to the "getEvents" function in app.tsx.Then resets the "fromDate" and "toDate" states so they are no longer visible on the front end
   function submitDates() {
     let startDate = fromDate ? fromDate : new Date();
     getEvents(startDate, toDate);

@@ -35,7 +35,7 @@ const EventsList: React.FC<EventsListProps> = ({
       });
   };
 
-  // should buttons display
+  // conditional rendering for "previous" and "next" buttons
   if (eventList.length === 5 && nextButton != null) {
     nextButton.style.visibility = 'visible'
   } else if (eventList.length < 5 && nextButton != null) {

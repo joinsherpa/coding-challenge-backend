@@ -42,7 +42,7 @@ export const addEvent = (newEvent: Event) => {
 }
 
 export const getAllEvents = (from?: number, to?: number, lastId?: string) =>  {
-  //pagination is achieved by utilizing the objectid. These ids are indexed and incremented making them perfect for scalable pagination.
+  //pagination is achieved by utilizing the objectid. These ids are indexed and incremented making them perfect for scalable pagination. For demo purposes the results per page was limited to 5. Results were first filtered by date range, and then return the first 5 results greater than the 'lastId'.
 
   //if both 'from' and 'to' args are valid
   if (from && to) {
@@ -72,6 +72,7 @@ export const getEventDetails = (eventId: string) => {
   return eventsModel.find({"_id": eventId})
 }
 
+//added for testing purposes on Postman. In the future would add functionality on UI.
 export const addAttendee = (newAttendee: Attendee) => {
 //if time, check for duplicates prior to adding
   return attendeeModel.findOneAndUpdate({email: newAttendee.email, eventId: newAttendee.eventId}, newAttendee, {new: true, upsert: true})

@@ -29,6 +29,7 @@ export const start = async (): Promise<Server> =>
 
       app.get("/events", async (req: Request, res: Response) => {
         try {
+          //front end sends either an empty string indicating null value, or a stringified number of ms or Id
           const from = req.query.from !== "" ? +req.query.from! : 0;
           const to = req.query.to !== "" ? +req.query.to! : 0;
           const lastId =
@@ -42,8 +43,10 @@ export const start = async (): Promise<Server> =>
 
       app.get("/events/:eventId", async (req: Request, res: Response) => {
         try {
+          //front end sends a string representing eventId
           const eventId = req.params.eventId;
           const currTime = new Date().getTime();
+          //the 3 following values are updated after receiving responses from geocoding API and weather API if applicable.
           let attendeeList: Attendee[] = [];
           let targetEvent: Event;
           let updatedTarget: DetailedEvent;
@@ -61,7 +64,7 @@ export const start = async (): Promise<Server> =>
             +targetEvent.date - +currTime >= 0
               ? true
               : false;
-
+          //only retrieve weather if within 7 days of event and event is outside
           if (withinWindow && targetEvent.isOutside) {
             const latLongResults = await searchAddressHandler(
               targetEvent.location
@@ -79,6 +82,7 @@ export const start = async (): Promise<Server> =>
                   let oneDayTime = new Date(oneDay.dt * 1000).toDateString();
                   let eventTime = new Date(targetEvent.date).toDateString();
                   if (oneDayTime === eventTime) {
+                    //creating new object with event details to return to front end
                     updatedTarget = {
                       _id: targetEvent._id,
                       name: targetEvent.name,
@@ -101,6 +105,7 @@ export const start = async (): Promise<Server> =>
               );
             }
           } else {
+            //creating new object with event details to return to front end
             updatedTarget = {
               _id: targetEvent._id,
               name: targetEvent.name,
