@@ -5,44 +5,41 @@ import { URLSearchParams } from 'url';
 import axios from 'axios';
 import FindEvents from './components/findEvents';
 import EventsList from './components/eventsList';
-
-type EventObj = {
-  _id: String;
-  name: String;
-  isOutside: Boolean;
-  location: String;
-  date: Date;
-  organizer: {name: String};
-  attendees: [];
-  __v: Number;
-}
+import { Event, DetailedEvent } from './helpers/interfaces';
+import { set } from 'mongoose';
 
 const App: React.FC = () => {
   const [beginDateRange, setBeginDateRange] = useState<Date | null>(null);
   const [endDateRange, setEndDateRange] = useState<Date | null>(null);
-  const [eventList, setEventList] = useState<EventObj[] | []>([]);
-  const [pageIds, setPageIds] = useState<String[]>(['']);
-  const [page, setPage] = useState<number>(0);
+  const [eventList, setEventList] = useState<Event[] | DetailedEvent[] | []>([]);
+  const [pageIds, setPageIds] = useState<string[]>(['']);
+  const [page, setPage] = useState<number>(1);
 
-  function getEvents(date1: Date, date2?: Date, lastId?: String): void {
+  function getEvents(date1: Date, date2?: Date, lastId?: string): void {
     const fromDate = date1?.getTime();
     const toDate = date2 ? date2.getTime(): '';
     const id = lastId || '';
 
-    axios.get<EventObj[] | []>('http://localhost:4040/events', {params: {from: fromDate, to: toDate, lastId: id}})
+    axios.get<Event[] | []>('http://localhost:4040/events', {params: {from: fromDate, to: toDate, lastId: id}})
       .then((returnedEvents)=> {
         const returnedLength = returnedEvents.data.length;
         const lastEvent = returnedEvents.data[returnedLength - 1];
 
-        if (date1 && !beginDateRange) {
-          setBeginDateRange(date1)
+        if (date1) {
+          if (!beginDateRange || date1 !== beginDateRange) {
+            setBeginDateRange(date1)
+          }
         }
-        if (date2 && !endDateRange) {
-          setEndDateRange(date2)
+        if (date2) {
+          if (!endDateRange || date2 !== endDateRange) {
+            setEndDateRange(date2)
+          }
+        } else {
+          setEndDateRange(null)
         }
 
-        if (returnedLength === 5 && !pageIds.includes(lastEvent._id)) {
-          setPageIds((prev) => [...pageIds, lastEvent._id])
+        if (returnedLength === 5 && !pageIds.includes(lastEvent._id!)) {
+          setPageIds((prev) => [...pageIds, lastEvent._id!])
         }
         setEventList(returnedEvents.data)
 
@@ -52,12 +49,12 @@ const App: React.FC = () => {
       })
   }
 
-  function newPageResults(direction: String) {
+  function newPageResults(direction: string) {
     if (direction === 'previous') {
       getEvents(beginDateRange || new Date(), endDateRange! , pageIds[page - 2])
     }
     if (direction === 'next') {
-      getEvents(beginDateRange || new Date(), endDateRange! , pageIds[pageIds.length - 1])
+      getEvents(beginDateRange || new Date(), endDateRange! , pageIds[page])
     }
   }
 
@@ -75,7 +72,7 @@ const App: React.FC = () => {
     }
   }
 
-  function addEventDetails(detailedEvent: EventObj) {
+  function addEventDetails(detailedEvent: Event) {
     if (eventList) {
       for (var i=0; i < eventList?.length; i++) {
         let currId = eventList[i]._id;

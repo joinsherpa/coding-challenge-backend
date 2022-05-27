@@ -1,25 +1,19 @@
-interface Organizer {
-    name: string
-}
+const {eventSchema, eventsModel, connection} =  require('/Users/jessekovash/Desktop/Coding/Interviews/sherpa/coding-challenge-backend/src/database/database.ts');
+const fs = require('fs');
+let eventData = fs.readFileSync('/Users/jessekovash/Desktop/Coding/Interviews/sherpa/coding-challenge-backend/data/data.json');
+const events = JSON.parse(eventData);
 
-interface Event {
-    name: string,
-    isOutside: boolean,
-    location: string,
-    date: number,
-    organizer: Organizer,
-    attendees: Attendees[]
-}
+//must re-establish db connection otherwise a timeout occurs during ETL process
+connection()
 
-interface Attendees {
-    status: string,
-    email: string,
-    attName: string,
-    Event_id: number
-}
-
-export const importData = () => {
-    // Import the data in json format and save in database
+const importData =  async () => {
+    try {
+        const initialETL = await eventsModel.insertMany(events)
+        console.log('Database has been loaded')
+    }
+    catch(error) {
+        console.log('Database not Loaded', error)
+    }
 }
 
 importData()

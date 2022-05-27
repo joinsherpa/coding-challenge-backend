@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import { ProgressPlugin } from "webpack";
+// import { ProgressPlugin } from "webpack";
 
 type FindEventProps = {
-  getEvents: (date1: Date, date2?: Date, lastId?: String) => void;
+  getEvents: (date1: Date, date2?: Date, lastId?: string) => void;
 };
 
 const FindEvents: React.FC<FindEventProps> = ({ getEvents }) => {
@@ -33,20 +33,11 @@ const FindEvents: React.FC<FindEventProps> = ({ getEvents }) => {
       <Calendar
         className="calendar"
         onChange={changeDate}
-        // selectRange={true}
         returnValue={"start"}
       />
       <div className="top-right-container">
         <h3 className="directions">Step 1: Choose start date (optional)</h3>
-        {/* <h4>
-          Selected From Date:
-          <span>{fromDate?.toDateString()}</span>
-        </h4> */}
         <h3 className="directions">Step 2: Choose end date (optional)</h3>
-        {/* <h4>
-          Selected To Date:
-          <span>{toDate?.toDateString()}</span>
-        </h4> */}
         <h2>Or</h2>
         <h3 className="directions">
           Just click the button below to get all current/future events

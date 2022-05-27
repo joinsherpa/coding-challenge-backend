@@ -1,21 +1,9 @@
 import React from "react";
-import { Weather } from "../mongo";
-
-type EventObj = {
-  _id: String;
-  name: String;
-  isOutside: Boolean;
-  location: String;
-  date: Date;
-  organizer: { name: String };
-  attendees: [];
-  weather?: Weather;
-  __v: Number;
-};
+import { Weather, DetailedEvent } from "../helpers/interfaces";
 
 type oneEventProps = {
-  eventList: EventObj[] | null;
-  retrieveDetails: (id: String) => void;
+  eventList: DetailedEvent[] | null;
+  retrieveDetails: (id: string) => void;
 };
 
 const OneEvent: React.FC<oneEventProps> = ({ eventList, retrieveDetails }) => {
@@ -31,17 +19,17 @@ const OneEvent: React.FC<oneEventProps> = ({ eventList, retrieveDetails }) => {
             <h4>{oneEvent.isOutside ? "Outdoor Event" : "Indoor Event"}</h4>
             <h4>
               {oneEvent.organizer
-                ? `Organizer: ${oneEvent?.organizer?.name}`
+                ? `Organizer: ${oneEvent?.organizer.name}`
                 : null}
             </h4>
-            <h4>{`${oneEvent.attendees.length} people are attending`}</h4>
+            <h4>{`${oneEvent.attendees?.length} people are attending`}</h4>
           </div>
         ) : (
           <div className="one-event-left">
             <h3>{oneEvent.name}</h3>
             <h4>{oneEvent.location}</h4>
             <h4>{new Date(oneEvent.date).toDateString()}</h4>
-            <h4>{oneEvent.isOutside ? "Outdoor Event" : "Indoor Event"}</h4>
+            {/* <h4>{oneEvent.isOutside ? "Outdoor Event" : "Indoor Event"}</h4> */}
           </div>
         )}
 
@@ -49,7 +37,7 @@ const OneEvent: React.FC<oneEventProps> = ({ eventList, retrieveDetails }) => {
           <div id={`id${index}`}>
             <button
               className={`weather-button class${index}`}
-              onClick={() => retrieveDetails(oneEvent._id)}
+              onClick={() => retrieveDetails(oneEvent._id!)}
             >
               Get Event Details
             </button>
@@ -70,7 +58,7 @@ const OneEvent: React.FC<oneEventProps> = ({ eventList, retrieveDetails }) => {
       </div>
     );
   });
-  return <div className="events-container">
+  return <div className="event-items">
     {eventElements}
     </div>;
 };

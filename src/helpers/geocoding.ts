@@ -1,5 +1,5 @@
 import axios from 'axios';
-const { geoCodeKey } = require('../config.js');
+const { geoCodeKey } = require('../config');
 
 export type GoogleGeocodingResponse = {
   results: {geometry: {location: {lat: number, lng: number}}}[];

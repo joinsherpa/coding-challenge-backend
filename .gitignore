@@ -8,4 +8,4 @@ data/data.json
 
 build/bundle
 
-config.js
+src/config.js

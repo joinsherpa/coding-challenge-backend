@@ -1,5 +1,5 @@
-import mongoose, { Schema, model, connect, Types, PaginateModel } from 'mongoose';
-import { paginate } from 'mongoose-paginate-v2';
+import mongoose, { Schema, model, connect, Types } from 'mongoose';
+import { Event, DetailedEvent, Weather, Organizer, Attendee } from '../helpers/interfaces';
 
 export const connection = () => {
   connect('mongodb://localhost/AllEvents')
@@ -9,43 +9,6 @@ export const connection = () => {
   .catch((err) => {
     console.log('Unable to connect to MongoDB:', err)
   });
-}
-
-export interface Event {
-      _id?: string,
-      name: string,
-      isOutside: boolean,
-      location: string,
-      date: number,
-      organizer: Organizer,
-      attendees: Attendee[];
-}
-
-export interface DetailedEvent {
-  _id? : string,
-  name: string,
-  isOutside: boolean,
-  location: string,
-  date: number,
-  organizer: Organizer,
-  attendees: Attendee[];
-  weather?: Weather | null;
-}
-
-export interface Weather {
-  temperatureInDegreesCelcius: number;
-  chanceOfRain: number | string;
-}
-
-export interface Organizer {
-    name: string
-}
-
-export interface Attendee {
-    status: string,
-    email: string,
-    attName: string,
-    eventId: string
 }
 
 const organizerSchema = new Schema<Organizer>({
@@ -59,9 +22,9 @@ const attendeeSchema = new Schema<Attendee>({
   eventId: {type: String}
 })
 
-const eventSchema = new Schema<Event>({
+export const eventSchema = new Schema<Event>({
   name: {type: String, required: true, index: { unique: false }},
-  isOutside: {type: Boolean, required: false},
+  isOutside: {type: Boolean, required: true},
   location: {type: String, required: true},
   date: {type: Number, required: true},
   organizer: {type: organizerSchema, required: false},
@@ -72,7 +35,7 @@ const attendeeModel = model<Attendee>('attendee', attendeeSchema);
 
 const organizerModel = model<Organizer>('organizer', organizerSchema);
 
-const eventsModel = model<Event>('event', eventSchema);
+export const eventsModel = model<Event>('event', eventSchema);
 
 export const addEvent = (newEvent: Event) => {
   return eventsModel.create(newEvent)
@@ -80,18 +43,15 @@ export const addEvent = (newEvent: Event) => {
 
 export const getAllEvents = (from?: number, to?: number, lastId?: string) =>  {
   //pagination is achieved by utilizing the objectid. These ids are indexed and incremented making them perfect for scalable pagination.
-  // const idString = "ObjectId(" + lastId + "")";
-  // console.log(idString)
+
   //if both 'from' and 'to' args are valid
   if (from && to) {
-    console.log('first')
     return (lastId
     ? eventsModel.find({date: {$gte: from, $lte: to}, _id: {$gt: lastId}}).limit(5)
     : eventsModel.find({date: {$gte: from, $lte: to}}).limit(5))
   }
   //if 'from' is valid, but 'to' is not
   else if (from && !to) {
-    console.log('second')
     return (lastId
       ? eventsModel.find({date: {$gte: from}, _id: {$gt: lastId}}).limit(5)
       : eventsModel.find({date: {$gte: from}}).limit(5)
@@ -100,7 +60,6 @@ export const getAllEvents = (from?: number, to?: number, lastId?: string) =>  {
   }
   //if both 'from' and 'to' are invalid
   else {
-    console.log('third')
     let currTime = Math.floor(new Date().getTime() / 1000);
     return (lastId
       ? eventsModel.find({date: {$gte: currTime}, _id: {$gt: lastId}}).limit(5)
@@ -121,8 +80,6 @@ export const addAttendee = (newAttendee: Attendee) => {
 export const getAllAttendees = (id: string) => {
   return attendeeModel.find({"eventId": id})
 }
-
-
 
 
 
