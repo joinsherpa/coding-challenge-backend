@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/myDb.db"
+}
+
+model Event {
+  event_id     Int        @id @default(autoincrement()) 
+  name         String     
+  isOutside    Boolean    
+  location     String
+  date         Int
+  organizer    Organizer  @relation(fields: [organizerId], references: [organizer_id])
+  organizerId  Int 
+}
+
+model Organizer {
+  organizer_id Int        @id @default(autoincrement()) 
+  name         String     @unique
+  event        Event[]
+}
