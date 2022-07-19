@@ -32,3 +32,15 @@ export function EventsQuerySanity(req: Request, res: Response, next: NextFunctio
 
     next();
 }
+export function EventQuerySanity(req: Request, res: Response, next: NextFunction) {
+    // ensuring passed query params are of the right type and format
+    let { id } = req.params;
+
+    if (id && !((/^-?\d+$/.test(<string>id)) || +id < 1)) {
+        return res.status(400).json({
+            error: 'Paramater \':id\' must be a number value and more than 0'
+        });
+    }
+
+    next();
+}

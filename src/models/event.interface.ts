@@ -9,6 +9,6 @@ export interface IEvent {
     date: number | Date;
     isOutside: boolean;
     organizer: string | IUser;
-    attendees: (number | IRSVP)[];
-    weather: IWeather;
+    attendees: (string | IRSVP)[];
+    weather?: IWeather;
 }

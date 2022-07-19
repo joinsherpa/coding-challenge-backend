@@ -1,6 +1,6 @@
 import express from "express"
 import {Server} from "http";
-import { initializeDB } from "./services/database";
+import { initializeDB } from "./services/database.service";
 import { EventRouter } from './routes/events';
 
 

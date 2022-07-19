@@ -1,5 +1,5 @@
 import events from '../data/data.json';
-import { queryDB } from '../src/services/database';
+import { queryDB } from '../src/services/database.service';
 
 interface Organizer {
     name: string
